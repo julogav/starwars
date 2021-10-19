@@ -1,0 +1,6 @@
+.footer {
+	grid-area: footer;
+	display: block;
+	color: #ffe81f;
+	font-size: 14px;
+}

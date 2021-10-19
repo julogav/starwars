@@ -1,0 +1,7 @@
+.header {
+	width: 100%;
+	font-family: 'StarJedi';
+	font-size: 4rem;
+	color: #ffe81f;
+	grid-area: header;
+}

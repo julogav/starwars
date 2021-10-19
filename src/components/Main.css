@@ -1,0 +1,15 @@
+.main {
+	grid-area: main;
+	padding-top: 2rem;
+	display: flex;
+	flex-flow: row nowrap;
+	color: #ffe81f;
+}
+
+.navbar {
+	width: 20%;
+}
+
+.content {
+	width: 80%;
+}
