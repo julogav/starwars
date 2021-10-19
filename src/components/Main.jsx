@@ -10,7 +10,7 @@ const Main = () => {
 	const [title, setTitle] = useState();
 	const [director, setDirector] = useState();
 	const [date, setDate] = useState();
-	const [abstract, setAbstract] = useState();
+	const [abstract, setAbstract] = useState('Select a movie to see its details');
 	const loadingMsg = 'Stars are far, give it a sec please...';
 
 	useEffect(() => {
@@ -60,6 +60,9 @@ const Main = () => {
 					<span className='filmDetails'>Title: {title}</span>
 					<span className='filmDetails'>Director: {director}</span>
 					<span className='filmDetails'>Date: {date}</span>
+					<span>
+						<input type='checkbox' value='favorite' unchecked></input>
+					</span>
 				</div>
 
 				<div className='abstract'>{abstract}</div>

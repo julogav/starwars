@@ -42,12 +42,32 @@ p:hover {
 
 .filmDetails {
 	font-size: 2.5vw;
-	padding: 1rem 0;
+	padding: 0.5vh 0;
 }
 
 .abstract {
 	width: 60%;
-	border: 1px #ffe81f solid;
-	padding: 0.3rem;
+	padding: 0.5rem;
 	font-size: 4vw;
+	font-weight: 600;
+	text-align: justify;
+	overflow: auto;
 }
+
+/* @keyframes scroll {
+	0% {
+		top: 0;
+		transform: rotateX(20deg) translateZ(0);
+	}
+	100% {
+		top: -6000px;
+		transform: rotateX(25deg) translateZ(-2500px);
+	}
+} */
+
+/* .scrollingText:hover {
+	position: relative;
+	top: 9999px;
+	transform-origin: 50% 100%;
+	animation: scroll 60s linear;
+} */
