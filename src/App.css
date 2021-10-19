@@ -2,7 +2,7 @@
 	display: grid;
 	width: 100vw;
 	height: 100vh;
-	grid-template-rows: 20% 70% 10%;
+	grid-template-rows: 15% 80% 5%;
 	text-align: center;
 	grid-template-areas: 'header' 'main' 'footer';
 	gap: 5px;
