@@ -17,7 +17,7 @@
 
 .navTitles {
 	display: block;
-	font-size: 3.5vw;
+	font-size: 3vw;
 	font-weight: 800;
 	text-align: center;
 }
@@ -30,4 +30,24 @@ p:hover {
 
 .content {
 	width: 75%;
+	display: flex;
+	flex-flow: row nowrap;
+}
+
+.filmInfo {
+	width: 40%;
+	display: flex;
+	flex-flow: column nowrap;
+}
+
+.filmDetails {
+	font-size: 2.5vw;
+	padding: 1rem 0;
+}
+
+.abstract {
+	width: 60%;
+	border: 1px #ffe81f solid;
+	padding: 0.3rem;
+	font-size: 4vw;
 }
