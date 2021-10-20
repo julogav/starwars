@@ -16,16 +16,26 @@ const Main = () => {
 	const [yoda, setYoda] = useState(outYoda);
 	const [favMsg, setFavMsg] = useState('Add to favorites');
 	const loadingMsg = 'Stars are far, give it a sec please...';
-	const [favoriteMovies, setFavoriteMovies] = useState([]);
+	const [favList, setFavList] = useState([]);
+	const [favorite, setFavorite] = useState();
 
-	const [favorite, setFavorite] = useState(() => {
-		favoriteMovies = localStorage.getItem('savedFav');
-		if (savedFav) return true;
-		if (!savedFav) return false;
-	});
+	const checkStorage = () => {
+		if (!localStorage.getItem('savedFav')) setFavorite(false);
+		if (localStorage.getItem('savedFav')) {
+			setFavList(JSON.parse(localStorage.getItem('savedFav')));
+			setFavorite(true);
+		}
+		return { favorite, favList };
+	};
+	const removeFav = title => {
+		if (favList.length === 1) setFavList([]);
+		const index = favList.indexOf(title);
+		if (index > -1) setFavList(favList.splice(index, 1));
+	};
 
 	useEffect(() => {
 		getData();
+		checkStorage();
 	}, []);
 
 	const getData = async () => {
@@ -51,14 +61,14 @@ const Main = () => {
 			setFavorite(true);
 			setYoda(filledYoda);
 			setFavMsg('Remove from favorites');
-			setFavoriteMovies([...title]);
-			localStorage.setItem('savedFav', title);
+			setFavList([...favList, title]);
+			localStorage.setItem('savedFav', JSON.stringify(favList));
 		}
 		if (favorite) {
 			setFavorite(false);
 			setYoda(outYoda);
 			setFavMsg('Add to favorites');
-			localStorage.removeItem('savedFav', title);
+			removeFav(title);
 		}
 	};
 
@@ -74,8 +84,10 @@ const Main = () => {
 							setDate(movie.release_date);
 							setDirector(movie.director);
 							setAbstract(movie.opening_crawl);
-							if (favorite) setYoda(filledYoda);
-							if (!favorite) setYoda(outYoda);
+							if (favList.length === 0) setYoda(outYoda);
+							if (favList && favList.includes(movie.title)) setYoda(filledYoda);
+							// if (favorite) setYoda(filledYoda);
+							// if (!favorite) setYoda(outYoda);
 						}}>
 						{movie.title}
 					</p>
