@@ -54,20 +54,26 @@ p:hover {
 	overflow: auto;
 }
 
-/* @keyframes scroll {
-	0% {
-		top: 0;
-		transform: rotateX(20deg) translateZ(0);
-	}
-	100% {
-		top: -6000px;
-		transform: rotateX(25deg) translateZ(-2500px);
-	}
-} */
+.favorite {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	margin: 1vh;
+}
 
-/* .scrollingText:hover {
-	position: relative;
-	top: 9999px;
-	transform-origin: 50% 100%;
-	animation: scroll 60s linear;
-} */
+button {
+	border: none;
+	background-color: transparent;
+	width: 5vw;
+	height: 100%;
+	margin-left: 1rem;
+	padding: 0;
+}
+
+button:hover {
+	cursor: pointer;
+}
+
+img {
+	outline-color: #ffe81f;
+}

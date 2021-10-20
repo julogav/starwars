@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import './Main.css';
 import axios from 'axios';
+import outYoda from '../outlinedYoda.png';
+import filledYoda from '../filledYoda.png';
 
 const Main = () => {
 	const baseURL = 'https://swapi.dev/api/films/';
@@ -60,8 +62,11 @@ const Main = () => {
 					<span className='filmDetails'>Title: {title}</span>
 					<span className='filmDetails'>Director: {director}</span>
 					<span className='filmDetails'>Date: {date}</span>
-					<span>
-						<input type='checkbox' value='favorite' unchecked></input>
+					<span className='favorite'>
+						<span className='filmDetails'>Add to favorites</span>
+						<button value='favorite'>
+							<img src={outYoda} alt='yoda' />
+						</button>
 					</span>
 				</div>
 
