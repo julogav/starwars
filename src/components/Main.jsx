@@ -13,7 +13,16 @@ const Main = () => {
 	const [director, setDirector] = useState();
 	const [date, setDate] = useState();
 	const [abstract, setAbstract] = useState('Select a movie to see its details');
+	const [yoda, setYoda] = useState(outYoda);
+	const [favMsg, setFavMsg] = useState('Add to favorites');
 	const loadingMsg = 'Stars are far, give it a sec please...';
+	const [favoriteMovies, setFavoriteMovies] = useState([]);
+
+	const [favorite, setFavorite] = useState(() => {
+		favoriteMovies = localStorage.getItem('savedFav');
+		if (savedFav) return true;
+		if (!savedFav) return false;
+	});
 
 	useEffect(() => {
 		getData();
@@ -36,6 +45,23 @@ const Main = () => {
 	if (loading) return loadingMsg;
 	if (error) return 'Oops! a wookiee got in the way...';
 
+	const handleFav = e => {
+		e.preventDefault();
+		if (!favorite) {
+			setFavorite(true);
+			setYoda(filledYoda);
+			setFavMsg('Remove from favorites');
+			setFavoriteMovies([...title]);
+			localStorage.setItem('savedFav', title);
+		}
+		if (favorite) {
+			setFavorite(false);
+			setYoda(outYoda);
+			setFavMsg('Add to favorites');
+			localStorage.removeItem('savedFav', title);
+		}
+	};
+
 	return (
 		<div className='main'>
 			<div className='navbar'>
@@ -48,6 +74,8 @@ const Main = () => {
 							setDate(movie.release_date);
 							setDirector(movie.director);
 							setAbstract(movie.opening_crawl);
+							if (favorite) setYoda(filledYoda);
+							if (!favorite) setYoda(outYoda);
 						}}>
 						{movie.title}
 					</p>
@@ -63,9 +91,9 @@ const Main = () => {
 					<span className='filmDetails'>Director: {director}</span>
 					<span className='filmDetails'>Date: {date}</span>
 					<span className='favorite'>
-						<span className='filmDetails'>Add to favorites</span>
-						<button value='favorite'>
-							<img src={outYoda} alt='yoda' />
+						<span className='favText'>{favMsg}</span>
+						<button onClick={handleFav}>
+							<img src={yoda} alt='yoda' />
 						</button>
 					</span>
 				</div>
