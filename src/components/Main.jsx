@@ -36,6 +36,7 @@ const Main = () => {
 	useEffect(() => {
 		getData();
 		checkStorage();
+		// eslint-disable-next-line
 	}, []);
 
 	const getData = async () => {
