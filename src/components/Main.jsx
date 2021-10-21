@@ -8,34 +8,37 @@ const Main = () => {
 	const baseURL = 'https://swapi.dev/api/films/';
 	const [data, setData] = useState([]);
 	const [loading, setLoading] = useState(true);
+	const loadingMsg = 'Stars are far, give it a sec please...';
 	const [error, setError] = useState(null);
 	const [title, setTitle] = useState();
 	const [director, setDirector] = useState();
 	const [date, setDate] = useState();
 	const [abstract, setAbstract] = useState('Select a movie to see its details');
+
 	const [yoda, setYoda] = useState(outYoda);
 	const [favMsg, setFavMsg] = useState('Add to favorites');
-	const loadingMsg = 'Stars are far, give it a sec please...';
-	const [favList, setFavList] = useState([]);
-	const [favorite, setFavorite] = useState();
 
-	const checkStorage = () => {
-		if (!localStorage.getItem('savedFav')) setFavorite(false);
-		if (localStorage.getItem('savedFav')) {
-			setFavList(JSON.parse(localStorage.getItem('savedFav')));
-			setFavorite(true);
-		}
-		return { favorite, favList };
-	};
+	const [favList, setFavList] = useState(() => {
+		const getList = localStorage.getItem('savedFav');
+		if (getList == null) return getList;
+		if (getList.length === 0) return [];
+	});
+
+	const [favorite, setFavorite] = useState(false);
+
+	const checkStorage = () => {};
+
 	const removeFav = title => {
 		if (favList.length === 1) setFavList([]);
-		const index = favList.indexOf(title);
-		if (index > -1) setFavList(favList.splice(index, 1));
+		else {
+			const index = favList.indexOf(title);
+			setFavList(favList.splice(index, 1));
+			localStorage.setItem('savedFav', favList);
+		}
 	};
 
 	useEffect(() => {
 		getData();
-		checkStorage();
 		// eslint-disable-next-line
 	}, []);
 
@@ -63,7 +66,7 @@ const Main = () => {
 			setYoda(filledYoda);
 			setFavMsg('Remove from favorites');
 			setFavList([...favList, title]);
-			localStorage.setItem('savedFav', JSON.stringify(favList));
+			localStorage.setItem('savedFav', JSON.stringify(title));
 		}
 		if (favorite) {
 			setFavorite(false);
@@ -81,14 +84,14 @@ const Main = () => {
 					<p
 						key={movie.episode_id}
 						onClick={() => {
+							checkStorage();
 							setTitle(movie.title);
 							setDate(movie.release_date);
 							setDirector(movie.director);
 							setAbstract(movie.opening_crawl);
-							if (favList.length === 0) setYoda(outYoda);
-							if (favList && favList.includes(movie.title)) setYoda(filledYoda);
-							// if (favorite) setYoda(filledYoda);
-							// if (!favorite) setYoda(outYoda);
+							if (favList === null) setYoda(outYoda);
+							else if (favList.includes(movie.title)) setYoda(filledYoda);
+							else setYoda(outYoda);
 						}}>
 						{movie.title}
 					</p>

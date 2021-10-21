@@ -7,6 +7,10 @@
 	max-height: 90vh;
 }
 
+.loadingTxt {
+	font-size: 30px;
+	color: #ffe81f;
+}
 .navbar {
 	width: 25%;
 	text-align: left;
