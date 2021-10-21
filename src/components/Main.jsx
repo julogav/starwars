@@ -24,8 +24,6 @@ const Main = () => {
 		return JSON.parse(getList);
 	});
 
-	const [favorite, setFavorite] = useState(false);
-
 	const removeFav = title => {
 		const newFav = favList.filter(fav => title !== fav);
 		setFavList(newFav);
@@ -44,6 +42,7 @@ const Main = () => {
 			return;
 		}
 		localStorage.setItem('savedFav', JSON.stringify(favList));
+		// eslint-disable-next-line
 	}, [favList, favList.length]);
 
 	const getData = async () => {
@@ -67,12 +66,10 @@ const Main = () => {
 	const handleFav = e => {
 		e.preventDefault();
 		if (favList && favList.includes(title)) {
-			setFavorite(false);
 			setYoda(outYoda);
 			setFavMsg('Add to favorites');
 			removeFav(title);
 		} else {
-			setFavorite(true);
 			setYoda(filledYoda);
 			setFavMsg('Remove from favorites');
 			setFavList([...favList, title]);
