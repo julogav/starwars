@@ -20,27 +20,31 @@ const Main = () => {
 
 	const [favList, setFavList] = useState(() => {
 		const getList = localStorage.getItem('savedFav');
-		if (getList == null) return getList;
-		if (getList.length === 0) return [];
+		if (!getList) return [];
+		return JSON.parse(getList);
 	});
 
 	const [favorite, setFavorite] = useState(false);
 
-	const checkStorage = () => {};
-
 	const removeFav = title => {
-		if (favList.length === 1) setFavList([]);
-		else {
-			const index = favList.indexOf(title);
-			setFavList(favList.splice(index, 1));
-			localStorage.setItem('savedFav', favList);
-		}
+		const newFav = favList.filter(fav => title !== fav);
+		setFavList(newFav);
 	};
 
 	useEffect(() => {
 		getData();
 		// eslint-disable-next-line
 	}, []);
+
+	const [firstRender, setFirstRender] = useState(true);
+
+	useEffect(() => {
+		if (firstRender) {
+			setFirstRender(false);
+			return;
+		}
+		localStorage.setItem('savedFav', JSON.stringify(favList));
+	}, [favList, favList.length]);
 
 	const getData = async () => {
 		await axios
@@ -56,23 +60,22 @@ const Main = () => {
 				setLoading(false);
 			});
 	};
+
 	if (loading) return loadingMsg;
 	if (error) return 'Oops! a wookiee got in the way...';
 
 	const handleFav = e => {
 		e.preventDefault();
-		if (!favorite) {
-			setFavorite(true);
-			setYoda(filledYoda);
-			setFavMsg('Remove from favorites');
-			setFavList([...favList, title]);
-			localStorage.setItem('savedFav', JSON.stringify(title));
-		}
-		if (favorite) {
+		if (favList && favList.includes(title)) {
 			setFavorite(false);
 			setYoda(outYoda);
 			setFavMsg('Add to favorites');
 			removeFav(title);
+		} else {
+			setFavorite(true);
+			setYoda(filledYoda);
+			setFavMsg('Remove from favorites');
+			setFavList([...favList, title]);
 		}
 	};
 
@@ -84,13 +87,11 @@ const Main = () => {
 					<p
 						key={movie.episode_id}
 						onClick={() => {
-							checkStorage();
 							setTitle(movie.title);
 							setDate(movie.release_date);
 							setDirector(movie.director);
 							setAbstract(movie.opening_crawl);
-							if (favList === null) setYoda(outYoda);
-							else if (favList.includes(movie.title)) setYoda(filledYoda);
+							if (favList && favList.includes(movie.title)) setYoda(filledYoda);
 							else setYoda(outYoda);
 						}}>
 						{movie.title}
