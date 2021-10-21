@@ -14,7 +14,7 @@ function Footer() {
 					Unsplash
 				</a>
 			</div>
-			<p>Single web app created by Juliet Gavison for Zoomin</p>
+			<span>Single web app created by Juliet Gavison for Zoomin</span>
 		</div>
 	);
 }

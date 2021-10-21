@@ -14,27 +14,19 @@ const Main = () => {
 	const [director, setDirector] = useState();
 	const [date, setDate] = useState();
 	const [abstract, setAbstract] = useState('Select a movie to see its details');
-
 	const [yoda, setYoda] = useState(outYoda);
 	const [favMsg, setFavMsg] = useState('Add to favorites');
-
+	const [firstRender, setFirstRender] = useState(true);
 	const [favList, setFavList] = useState(() => {
 		const getList = localStorage.getItem('savedFav');
 		if (!getList) return [];
 		return JSON.parse(getList);
 	});
 
-	const removeFav = title => {
-		const newFav = favList.filter(fav => title !== fav);
-		setFavList(newFav);
-	};
-
 	useEffect(() => {
 		getData();
 		// eslint-disable-next-line
 	}, []);
-
-	const [firstRender, setFirstRender] = useState(true);
 
 	useEffect(() => {
 		if (firstRender) {
@@ -58,6 +50,11 @@ const Main = () => {
 			.finally(() => {
 				setLoading(false);
 			});
+	};
+
+	const removeFav = title => {
+		const newFav = favList.filter(fav => title !== fav);
+		setFavList(newFav);
 	};
 
 	if (loading) return loadingMsg;
@@ -94,7 +91,6 @@ const Main = () => {
 						{movie.title}
 					</p>
 				))}
-				<span className='navTitles'>FAVORITES</span>
 			</div>
 			<div className='content'>
 				{loading && <span className='loadingTxt'>{loadingMsg}</span>}
